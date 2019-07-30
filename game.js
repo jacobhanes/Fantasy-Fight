@@ -14,7 +14,31 @@ function Hero(name, job, hitpoints, strength, luck, level){
            "HP: " + this.hitpoints,
            "Strength: " + this.strength,
            "Luck(crit): " + this.luck,
+           "Level: " + this.level
         ].join("\n");
         console.log(heroInfo);
     }
+}
+function heroCreation(){
+
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "Name",
+            message: "Hero's Name?"
+        },
+        {
+            type: "list",
+            name: "job",
+            message: "Choose a job",
+            choices: ["Warrior", "Mage", "Thief"]
+        },
+        {
+            type: "checkbox",
+            name: "stats",
+            message: "Add 3 more stats",
+            choices: ["Hitpoints", "Strength", "luck"]
+        }
+    ])
 }
