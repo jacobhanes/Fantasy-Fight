@@ -10,3 +10,5 @@ function Enemy(name, hitpoints, strength, luck){
         }
     }
 }
+
+module.exports = Enemy;
