@@ -4,7 +4,7 @@ let Hero = require("./character");
 const gnoll = new Enemys("Gnoll", 20, 20, 8, 8);
 
 heroCreation();
-gameStart();
+
 function heroCreation() {
 
     inquirer
@@ -46,6 +46,9 @@ function heroCreation() {
                         warrior.chooseLuck();
                     }
                     warrior.printInfo();
+                    if (warrior.level < 10){
+                        gameStart();
+                    }
                     
                 })
 
@@ -100,7 +103,7 @@ function heroCreation() {
                         theif.chooseLuck();
                     }
                     theif.printInfo();
-                    gameStart();
+                    
                 })
             };
            
@@ -109,8 +112,7 @@ function heroCreation() {
 
 function gameStart() {
 
-    if (warrior.level < 10){
-
+    
         inquirer
         .prompt([
             {
@@ -124,7 +126,7 @@ function gameStart() {
                 fightQuestions();
             }
         })
-    }    
+        
 }
 
 function fightQuestions(){
