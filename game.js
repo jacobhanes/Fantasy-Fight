@@ -1,10 +1,10 @@
 var inquirer = require('inquirer');
-let enemys = require("./enemy");
+let Enemys = require("./enemy");
 let Hero = require("./character");
+const gnoll = new Enemys("Gnoll", 20, 20, 8, 8);
 
-let enemyMaxHp = 0;
-let heroMaxHP = 0;
 heroCreation();
+gameStart();
 function heroCreation() {
 
     inquirer
@@ -20,16 +20,11 @@ function heroCreation() {
                 message: "Choose a job",
                 choices: ["Warrior", "Mage", "Thief"]
             },
-            // {
-            //     type: "checkbox",
-            //     name: "stats",
-            //     message: "Add 3 more stats",
-            //     choices: ["Hitpoints", "Strength", "luck"]
-            // }
+            
         ]).then(function (answer) {
             if (answer.job === "Warrior") {
-                const warrior = new Hero(answer.Name, answer.job, 110, 4, 3, 1);
-                heroMaxHP = 110;
+                const warrior = new Hero(answer.Name, answer.job, 110, 110, 4, 3, 1);
+                
 
                 inquirer.prompt([
                     {
@@ -41,7 +36,8 @@ function heroCreation() {
                 ]).then(function (res) {
                     if (res.stats === "Hitpoints") {
                         warrior.chooseHp();
-                        heroMaxHP += 30;
+                       
+                        
                     };
                     if (res.stats === "Strength") {
                         warrior.chooseStr();
@@ -50,14 +46,14 @@ function heroCreation() {
                         warrior.chooseLuck();
                     }
                     warrior.printInfo();
-
+                    
                 })
 
-
+                
             };
             if (answer.job === "Mage") {
-                const mage = new Hero(answer.Name, answer.job, 60, 7, 5, 1);
-                heroMaxHP = 60;
+                const mage = new Hero(answer.Name, answer.job, 60, 60, 7, 5, 1);
+                
 
                 inquirer.prompt([
                     {
@@ -78,12 +74,12 @@ function heroCreation() {
                         mage.chooseLuck();
                     }
                     mage.printInfo();
-
+                    gameStart();
                 })
             };
             if (answer.job === "Thief") {
-                const theif = new Hero(answer.Name, answer.job, 80, 5, 10, 1);
-                heroMaxHP = 80;
+                const theif = new Hero(answer.Name, answer.job, 80, 80, 5, 10, 1);
+                
 
                 inquirer.prompt([
                     {
@@ -95,7 +91,7 @@ function heroCreation() {
                 ]).then(function(res){
                     if (res.stats === "Hitpoints") {
                         theif.chooseHp();
-                        heroMaxHP += 30;
+                        
                     };
                     if (res.stats === "Strength"){
                         theif.chooseStr();
@@ -104,7 +100,7 @@ function heroCreation() {
                         theif.chooseLuck();
                     }
                     theif.printInfo();
-                    
+                    gameStart();
                 })
             };
            
@@ -112,21 +108,47 @@ function heroCreation() {
 }
 
 function gameStart() {
-    inquirer
+
+    if (warrior.level < 10){
+
+        inquirer
         .prompt([
             {
                 type: "list",
                 name: "play",
                 message: "What should your hero do?",
-                choices: ["Fight", "Heal"]
+                choices: ["Fight", "Heal", "Stats"]
             }
         ]).then(function (playing) {
             if (playing.play === "Fight") {
-
+                fightQuestions();
             }
         })
+    }    
 }
+
+function fightQuestions(){
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "fightQ",
+            message: "What should we do?",
+            choices: ["Attack", "Inspect"]
+        }
+    ]).then(function(answer){
+        if (answer.fightQ === "Attack"){
+            fight();
+        }
+        if (answer.fightQ === "Inspect"){
+            enemy.EnemyInfo();
+        }
+    })
+}
+
 
 function fight() {
     Hero.hitpoints - enemy.strength;
+    enemy.hitpoints - Hero.strength;
+    Hero.printInfo();
+    Enemy.enemyInfo();
 }

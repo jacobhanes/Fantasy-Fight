@@ -1,7 +1,8 @@
-function Hero(name, job, hitpoints, strength, luck, level) {
+function Hero(name, job, hitpoints, maxHitPoints, strength, luck, level) {
     this.name = name,
     this.job = job,
     this.hitpoints = hitpoints,
+    this.maxHitPoints = maxHitPoints,
     this.strength = strength,
     this.luck = luck,
     this.level = level,
@@ -10,6 +11,7 @@ function Hero(name, job, hitpoints, strength, luck, level) {
             "Name: " + this.name,
             "Job: " + this.job,
             "HP: " + this.hitpoints,
+            "Max HP: " + this.maxHitPoints,
             "Strength: " + this.strength,
             "Luck(crit): " + this.luck,
             "Level: " + this.level
@@ -24,13 +26,22 @@ function Hero(name, job, hitpoints, strength, luck, level) {
     };
     this.chooseHp = function(){
         this.hitpoints += 30;
+        this.maxHitPoints += 30;
     };
     this.chooseStr = function(){
         this.strength += 3;
-    }
+    };
     this.chooseLuck = function(){
         this.luck += 3;
-    }
+    };
+    this.isAlive = function(){
+        if (this.hitpoints > 0){
+            console.log("hero is alive");
+        }
+        else {
+            console.log("Hero is dead game over");
+        }
+    };
 };
 
 module.exports = Hero;
